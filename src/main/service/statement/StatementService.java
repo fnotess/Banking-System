@@ -57,6 +57,7 @@ public final class StatementService implements StatementServiceI {
                             || rule.getDate().equals(transaction.getDate()))
                     .max(Comparator.comparing(InterestRule::getDate));
 
+
             // Get the closest next interest rule after transaction date
             // This is also optional since there might not be a rule after transaction date
             Optional<InterestRule> nextInterestRule = applicableInterestRules.stream()
