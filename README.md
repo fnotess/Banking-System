@@ -87,4 +87,18 @@ above command will create a JAR file within the target folder
 
 This will run the program in a terminal and prompt the user to enter inputs
 
+## About the author
+
+My name is Sithija Thewa Hettige.
+ Find more about me here ,
+
+- [Personal Blog](https://fnotess.github.io/my-portfolio-web/#)
+- [LinkedIn](https://www.linkedin.com/in/sithijathewahettige/)
+- [Stack Overflow](https://stackoverflow.com/users/4859626/sithija-piyuman-thewa-hettige)
+
+
+
+
+
+
 
