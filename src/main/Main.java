@@ -18,9 +18,6 @@ import java.util.*;
 
 public class Main {
 
-//    private static final Map<String, BankAccount> accounts = new HashMap<>();
-//    private static final List<InterestRule> interestRules = new ArrayList<>();
-
     private static final BankDataStoreI DATA_STORE = BankDataStore.getInstance();
     private static final StatementServiceI STATEMENT_SERVICE = StatementService.getInstance();
 
@@ -57,7 +54,7 @@ public class Main {
         }
     }
 
-    private static void inputTransactions(Scanner scanner) throws ParseException {
+    public static void inputTransactions(Scanner scanner) throws ParseException {
         System.out.println("Please enter transaction details in <Date>|<Account>|<Type>|<Amount> format");
         System.out.println("(or enter blank to go back to the main menu):");
         System.out.print("> ");
@@ -175,7 +172,7 @@ public class Main {
 
     private static void printAccountStatement(BankAccount account, Month month) {
         System.out.println("Account: " + account.getAccountNumber());
-        System.out.println("Date     | Txn Id      | Type | Amount | Balance |");
+        System.out.println("Date \t\t| Txn Id \t\t| Type \t| Amount \t| Balance \t|");
         DecimalFormat df = new DecimalFormat("0.00");
 
         List<Transaction> applicableTransactions = month == null
@@ -187,16 +184,12 @@ public class Main {
             if ("I".equals(transaction.getType())) {
                 continue;
             }
-            System.out.printf("%s | %s | %s | %s | %s%n", transaction.getDateString(), transaction.getTransactionId(),
+            System.out.printf("%s \t| %s \t| %s \t| %s \t| %s \t|\n", transaction.getDateString(), transaction.getTransactionId(),
                     transaction.getType(), df.format(transaction.getAmount()), df.format(transaction.getBalance()));
         }
     }
 
     private static void printStatement(Scanner scanner) throws ParseException {
-        // Here if month is 06 we don't know which year June user is referring to
-        // Here I have assumed only 2023 records are inputted
-        // year is important here to determine the last date of the month , because leap years has an extra day in february thus changing the interest deposit day for the month
-        // this is an edge case and can be fixed , but for the interest of time I have ignored this case here
         System.out.println("Please enter account and month to generate the statement <Account>|<Month>");
         System.out.println("(or enter blank to go back to the main menu):");
         System.out.print("> ");
@@ -230,49 +223,13 @@ public class Main {
         applyInterest(account, monthObj);
     }
 
-//        private static void applyInterest1(BankAccount account, String month) {
-//            System.out.println("apply interest");
-//            List<InterestRule> applicableRules = new ArrayList<>();
-//
-//
-//            System.out.println(interestRules);
-//            for (InterestRule rule : interestRules) {
-//                // Extract the year from the rule's date
-//                String ruleYear = rule.getDate().substring(0, 4);
-//
-//                // Use the same year as the processing month
-//                String targetDate = ruleYear + month + "01";
-//                System.out.println(targetDate);
-//                System.out.println(rule.getDate());
-//
-//                if (rule.getDate().compareTo(targetDate) <= 0) {
-//                    applicableRules.add(rule);
-//                }
-//            }
-//
-//            System.out.println(applicableRules.size());
-//
-//            double totalInterest = 0.0;
-//
-//            for (InterestRule rule : applicableRules) {
-//                System.out.println("process applicable lines");
-//                double dailyRate = rule.getRate() / 100.0;
-//                int daysInMonth = Integer.parseInt(month.substring(4));
-//                double dailyInterest = (account.getBalance() * dailyRate) / daysInMonth;
-//                totalInterest += dailyInterest;
-//            }
-//
-//            String lastDayOfMonth = getLastDayOfMonth(month);
-//            System.out.println(lastDayOfMonth);
-//            account.deposit(lastDayOfMonth,totalInterest,"I");
-//            printAccountStatement(account);
-//        }
 
     public static void applyInterest(BankAccount account, Month month) throws ParseException {
         Transaction lastTxn = account.getTransactions().get(account.getTransactions().size() - 1);
         if ("I".equals(lastTxn.getType()) && lastTxn.getDate().getDayOfMonth() == month.maxLength()
-                && lastTxn.getDate().getYear() == Year.now().getValue()) {
-            System.out.printf("%s | %s | %s | %.2f | %.2f%n", TimeUtils.toDateString(lastTxn.getDate()), " ",
+                && lastTxn.getDate().getYear() == Year.now().getValue()
+                && lastTxn.getAccount().equals(account.getAccountNumber())) {
+            System.out.printf("%s \t| %s \t\t\t| %s \t| %.2f \t\t| %.2f \t|%n", TimeUtils.toDateString(lastTxn.getDate()), " ",
                     "I", lastTxn.getAmount(), lastTxn.getBalance());
         } else {
             double interest = STATEMENT_SERVICE.generateMonthlyInterestForAccount(account.getAccountNumber(), month);
@@ -281,7 +238,7 @@ public class Main {
 
             account.deposit(TimeUtils.toDateString(endOfMonth), interest, "I");
 
-            System.out.printf("%s | %s | %s | %.2f | %.2f%n", TimeUtils.toDateString(endOfMonth), " ",
+            System.out.printf("%s \t| %s \t\t\t| %s \t| %.2f \t\t| %.2f \t|%n", TimeUtils.toDateString(endOfMonth), " ",
                     "I", interest, account.getBalance());
         }
 

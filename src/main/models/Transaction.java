@@ -3,17 +3,17 @@ package main.models;
 import main.util.TimeUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class Transaction {
 
     private static int transactionIdCounter = 1;
+    private static String transactionDate;
     private LocalDate date;
     private String account;
     private String type;
     private double amount;
-    private int transactionId;
+    private String transactionId;
 
     private double balance;
 
@@ -28,9 +28,16 @@ public class Transaction {
         this.account = account;
         this.type = type.toUpperCase();
         this.amount = amount;
-        this.transactionId = transactionIdCounter++;
+        if (date.equals(transactionDate)) {
+            transactionIdCounter++;
+        } else {
+            transactionDate = date;
+            transactionIdCounter = 1;
+        }
+        this.transactionId = transactionDate + "-0" + transactionIdCounter;
         this.setBalance(balance);
     }
+
     public String getDateString() {
         try {
             return TimeUtils.toDateString(this.date);
@@ -55,7 +62,7 @@ public class Transaction {
         return amount;
     }
 
-    public int getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
