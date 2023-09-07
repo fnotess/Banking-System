@@ -97,7 +97,9 @@ My name is Sithija Thewa Hettige.
 - [Stack Overflow](https://stackoverflow.com/users/4859626/sithija-piyuman-thewa-hettige)
 
 
-
+P.S : You may see a slight misalignment when comes to tables being printed
+this I do not experience in the intellij IDEA terminal. But you may see it in others.
+But the values are correct.
 
 
 
