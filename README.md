@@ -43,6 +43,7 @@ not done in the example. Therefore the current logic will follow what is given i
 - Sonar properties file can be added with a running sonar server so the code quality reports can be generated and pushed.
 - A database can be attached to the solution instead of an in memory solution.
 - Spring boot can be used.
+- Can add withdrawals (W), Deposits(D) and Interest(I) as enums since they are the only transaction types
 
 ## Test Data
 
@@ -60,3 +61,30 @@ Interest rules
 
 Account name and month
 - AC001|06
+
+Ideally given these inputs program should produce 0.39 as the interest amount.
+
+## Setting up the application
+
+This was developed in a macOS env with openJDK20
+
+- Clone the project from the repo
+- Run `mvn clean install` to install all dependencies
+
+or else you can run the commands separately 
+
+`mvn clean`  - to clean any existing build artifacts
+
+`mvn compile` - to compile and create .class files
+
+`mvn package`  - to create an executable JAR 
+
+above command will create a JAR file within the target folder 
+
+- Running the executable JAR via below command
+
+`java -jar target/BankingSystem-1.0-SNAPSHOT.jar`
+
+This will run the program in a terminal and prompt the user to enter inputs
+
+
