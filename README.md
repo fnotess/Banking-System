@@ -87,6 +87,9 @@ above command will create a JAR file within the target folder
 
 This will run the program in a terminal and prompt the user to enter inputs
 
+Please find the build artifact (jar file) for this project [here](https://drive.google.com/drive/u/1/folders/1Cffc2qff2X9rohB9E2VJ6daqZeaD_ufm)
+
+
 ## About the author
 
 My name is Sithija Thewa Hettige.
